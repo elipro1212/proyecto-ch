@@ -1,0 +1,514 @@
+/* =============================================
+   CARNICERÍA — CALCULADORA DE PRECIOS
+   style.css
+   ============================================= */
+
+/* --- Reset & base --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* --- App shell --- */
+.app {
+  font-family: 'Syne', sans-serif;
+  background: #1a1008;
+  color: #f5ede0;
+  min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  padding-bottom: 2rem;
+}
+
+/* --- Header --- */
+.header {
+  background: #c0392b;
+  padding: 1.1rem 1.25rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.header-icon { font-size: 22px; }
+.header h1 {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #fff;
+}
+.header p {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 400;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* --- Conversión rápida --- */
+.conv-block {
+  margin: 1rem 1.25rem 0;
+  background: #221505;
+  border: 1.5px solid #4a2e14;
+  border-radius: 13px;
+  overflow: hidden;
+}
+
+.conv-header {
+  background: #2e1a09;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+.conv-header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.conv-header .ti-calculator {
+  color: #c9a87a;
+  font-size: 18px;
+}
+.conv-title {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #c9a87a;
+  font-weight: 700;
+}
+.conv-subtitle {
+  font-size: 11px;
+  color: #6b5030;
+  margin-top: 1px;
+}
+.conv-chevron {
+  color: #6b5030;
+  font-size: 18px;
+  transition: transform 0.2s;
+}
+.conv-chevron.open {
+  transform: rotate(180deg);
+}
+
+.conv-body {
+  padding: 12px 14px 14px;
+}
+.conv-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.mini-input-wrap {
+  background: #1a1008;
+  border: 1.5px solid #3a2510;
+  border-radius: 9px;
+  padding: 8px 10px;
+  min-height: 58px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.mini-input-wrap:focus-within {
+  border-color: #c0392b;
+}
+.mini-label {
+  font-size: 10px;
+  color: #6b5030;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 2px;
+}
+.mini-input-inner {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.mini-sign {
+  font-size: 15px;
+  color: #a0896e;
+  font-family: 'DM Mono', monospace;
+}
+.mini-input-wrap input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f5ede0;
+  font-family: 'DM Mono', monospace;
+  font-size: 20px;
+  font-weight: 500;
+  width: 100%;
+}
+.mini-input-wrap input::placeholder {
+  color: #3a2010;
+}
+.mini-unit {
+  font-size: 11px;
+  color: #6b5030;
+  white-space: nowrap;
+}
+
+.conv-result {
+  background: #1a1008;
+  border: 1.5px solid #3a2510;
+  border-radius: 9px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.conv-result-label {
+  font-size: 11px;
+  color: #6b5030;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+.conv-result-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 20px;
+  font-weight: 500;
+  color: #e8c97a;
+}
+.conv-result-value.zero {
+  color: #3a2010;
+}
+
+.apply-btn {
+  display: block;
+  width: 100%;
+  background: #c0392b;
+  border: none;
+  border-radius: 9px;
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 12px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.15s, transform 0.15s;
+}
+.apply-btn:active {
+  transform: scale(0.97);
+  background: #a93226;
+}
+.apply-btn:disabled {
+  background: #3a2010;
+  color: #6b5030;
+  cursor: not-allowed;
+}
+
+.apply-flash {
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: #c9a87a;
+  text-transform: uppercase;
+  margin-top: 6px;
+  height: 16px;
+}
+
+/* --- Sections --- */
+.section {
+  padding: 1.2rem 1.25rem 0.6rem;
+}
+
+.label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #a0896e;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+/* --- Costo por kilo input --- */
+.price-input-wrap {
+  display: flex;
+  align-items: center;
+  background: #2a1c0f;
+  border: 1.5px solid #4a2e14;
+  border-radius: 10px;
+  padding: 0 14px;
+  gap: 6px;
+}
+.price-input-wrap:focus-within {
+  border-color: #c0392b;
+}
+.peso-sign {
+  font-size: 22px;
+  color: #a0896e;
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+}
+.price-input-wrap input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f5ede0;
+  font-family: 'DM Mono', monospace;
+  font-size: 26px;
+  font-weight: 500;
+  width: 100%;
+  padding: 14px 0;
+  letter-spacing: 0.02em;
+}
+.price-input-wrap input::placeholder {
+  color: #4a3020;
+}
+.unit-badge {
+  font-size: 11px;
+  color: #a0896e;
+  letter-spacing: 0.07em;
+  white-space: nowrap;
+}
+
+/* --- Margen --- */
+.margin-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.margin-btn {
+  background: #2a1c0f;
+  border: 1.5px solid #3a2510;
+  border-radius: 9px;
+  color: #c9a87a;
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 13px 4px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.15s;
+  text-align: center;
+}
+.margin-btn.active {
+  background: #c0392b;
+  border-color: #c0392b;
+  color: #fff;
+}
+.margin-btn:active {
+  transform: scale(0.96);
+}
+
+.custom-margin-wrap {
+  display: flex;
+  align-items: center;
+  background: #2a1c0f;
+  border: 1.5px solid #3a2510;
+  border-radius: 9px;
+  padding: 0 12px;
+  gap: 6px;
+}
+.custom-margin-wrap:focus-within {
+  border-color: #c0392b;
+}
+.custom-margin-wrap .ti-pencil {
+  color: #6b5030;
+  font-size: 16px;
+}
+.custom-margin-wrap input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f5ede0;
+  font-family: 'DM Mono', monospace;
+  font-size: 18px;
+  font-weight: 500;
+  width: 100%;
+  padding: 11px 0;
+}
+.custom-margin-wrap input::placeholder {
+  color: #4a3020;
+}
+.custom-margin-wrap span {
+  color: #a0896e;
+  font-size: 15px;
+}
+
+/* --- Precio de venta preview --- */
+.price-preview {
+  background: #261508;
+  border: 1.5px solid #3a2510;
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+}
+.pp-label {
+  font-size: 12px;
+  color: #a0896e;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.pp-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 22px;
+  font-weight: 500;
+  color: #e8c97a;
+}
+.pp-value.zero {
+  color: #4a3020;
+}
+
+/* --- Divider --- */
+.divider {
+  height: 1px;
+  background: #2a1c0f;
+  margin: 0.5rem 1.25rem;
+}
+
+/* --- Tabs de modo --- */
+.mode-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: #2a1c0f;
+  border-radius: 11px;
+  padding: 4px;
+  margin-bottom: 1rem;
+}
+.mode-tab {
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  color: #6b5030;
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 11px 8px;
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s;
+  line-height: 1.3;
+  text-align: center;
+}
+.mode-tab.active {
+  background: #c0392b;
+  color: #fff;
+}
+.mode-icon {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 2px;
+}
+
+/* --- Input de cálculo --- */
+.calc-input-wrap {
+  display: flex;
+  align-items: center;
+  background: #2a1c0f;
+  border: 1.5px solid #4a2e14;
+  border-radius: 10px;
+  padding: 0 14px;
+  gap: 6px;
+  margin-bottom: 1rem;
+}
+.calc-input-wrap:focus-within {
+  border-color: #c0392b;
+}
+.calc-input-wrap input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f5ede0;
+  font-family: 'DM Mono', monospace;
+  font-size: 28px;
+  font-weight: 500;
+  width: 100%;
+  padding: 16px 0;
+}
+.calc-input-wrap input::placeholder {
+  color: #4a3020;
+}
+.calc-input-wrap .unit {
+  font-size: 13px;
+  color: #a0896e;
+  white-space: nowrap;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+}
+
+/* --- Tarjeta de resultado --- */
+.result-card {
+  background: #c0392b;
+  border-radius: 14px;
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  min-height: 110px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+.result-card.empty {
+  background: #2a1c0f;
+}
+.result-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+.result-card.empty .result-label {
+  color: #4a3020;
+}
+.result-value {
+  font-family: 'DM Mono', monospace;
+  font-size: 52px;
+  font-weight: 500;
+  color: #fff;
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.result-card.empty .result-value {
+  color: #3a2010;
+  font-size: 36px;
+}
+.result-unit {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.55);
+  margin-top: 4px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+.result-card.empty .result-unit {
+  color: #3a2010;
+}
+
+/* --- Botón limpiar --- */
+.clear-btn {
+  display: block;
+  width: 100%;
+  background: transparent;
+  border: 1.5px solid #3a2510;
+  border-radius: 9px;
+  color: #6b5030;
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 12px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.15s, color 0.15s, transform 0.15s;
+}
+.clear-btn:active {
+  background: #2a1c0f;
+  color: #a0896e;
+  transform: scale(0.98);
+}
