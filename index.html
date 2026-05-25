@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carnicería — Calculadora de Precios</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+</head>
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <header class="header">
+    <span class="header-icon" aria-hidden="true">🥩</span>
+    <div>
+      <h1>Carnicería</h1>
+      <p>Calculadora de precios</p>
+    </div>
+  </header>
+
+  <!-- CONVERSIÓN RÁPIDA -->
+  <div class="conv-block">
+    <div class="conv-header" id="convToggle" role="button" aria-expanded="true" aria-controls="convBody" tabindex="0">
+      <div class="conv-header-left">
+        <i class="ti ti-calculator" aria-hidden="true"></i>
+        <div>
+          <div class="conv-title">Conversión rápida</div>
+          <div class="conv-subtitle">Calcula el costo por kilo de tu compra</div>
+        </div>
+      </div>
+      <i class="ti ti-chevron-down conv-chevron open" id="convChevron" aria-hidden="true"></i>
+    </div>
+
+    <div class="conv-body" id="convBody">
+      <div class="conv-row">
+        <div class="mini-input-wrap">
+          <div class="mini-label">Total kilos</div>
+          <div class="mini-input-inner">
+            <input type="number" id="totalKilos" inputmode="decimal" placeholder="0" min="0" step="0.1" aria-label="Total de kilos comprados" />
+            <span class="mini-unit">kg</span>
+          </div>
+        </div>
+        <div class="mini-input-wrap">
+          <div class="mini-label">Costo total</div>
+          <div class="mini-input-inner">
+            <span class="mini-sign">$</span>
+            <input type="number" id="totalCosto" inputmode="decimal" placeholder="0" min="0" step="1" aria-label="Costo total de la compra" />
+          </div>
+        </div>
+      </div>
+
+      <div class="conv-result">
+        <div class="conv-result-label">Costo por kilo</div>
+        <div class="conv-result-value zero" id="costoKiloCalc">$—</div>
+      </div>
+
+      <button class="apply-btn" id="applyBtn" disabled aria-label="Usar este costo por kilo en la calculadora">
+        <i class="ti ti-arrow-down" aria-hidden="true"></i> Usar este precio
+      </button>
+      <div class="apply-flash" id="applyFlash"></div>
+    </div>
+  </div>
+
+  <!-- COSTO POR KILO -->
+  <section class="section">
+    <div class="label">Costo por kilo</div>
+    <div class="price-input-wrap">
+      <span class="peso-sign">$</span>
+      <input type="number" id="costo" inputmode="decimal" placeholder="0.00" min="0" step="0.01" aria-label="Costo por kilo en pesos" />
+      <span class="unit-badge">/ kg</span>
+    </div>
+  </section>
+
+  <!-- MARGEN -->
+  <section class="section">
+    <div class="label">Margen de ganancia</div>
+    <div class="margin-grid">
+      <button class="margin-btn" data-val="20">20%</button>
+      <button class="margin-btn active" data-val="30">30%</button>
+      <button class="margin-btn" data-val="40">40%</button>
+      <button class="margin-btn" data-val="50">50%</button>
+    </div>
+    <div class="custom-margin-wrap">
+      <i class="ti ti-pencil" aria-hidden="true"></i>
+      <input type="number" id="margenCustom" inputmode="decimal" placeholder="Margen personalizado" min="0" max="99" step="1" aria-label="Margen personalizado en porcentaje" />
+      <span>%</span>
+    </div>
+  </section>
+
+  <!-- PRECIO DE VENTA PREVIEW -->
+  <section class="section" style="padding-bottom: 0.4rem;">
+    <div class="price-preview">
+      <span class="pp-label">Precio venta / kg</span>
+      <span class="pp-value zero" id="precioVenta">$—</span>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- MODOS DE CÁLCULO -->
+  <section class="section">
+    <div class="label">Modo de cálculo</div>
+    <div class="mode-tabs" role="tablist">
+      <button class="mode-tab active" id="tabA" role="tab" aria-selected="true" aria-controls="modoA">
+        <i class="ti ti-currency-dollar mode-icon" aria-hidden="true"></i>
+        Dinero → Gramos
+      </button>
+      <button class="mode-tab" id="tabB" role="tab" aria-selected="false" aria-controls="modoB">
+        <i class="ti ti-weight mode-icon" aria-hidden="true"></i>
+        Gramos → Dinero
+      </button>
+    </div>
+
+    <!-- MODO A -->
+    <div id="modoA" role="tabpanel">
+      <div class="label">¿Cuánto dinero te dio el cliente?</div>
+      <div class="calc-input-wrap">
+        <span class="peso-sign">$</span>
+        <input type="number" id="inputDinero" inputmode="decimal" placeholder="0" min="0" step="1" aria-label="Dinero del cliente" />
+      </div>
+      <div class="result-card empty" id="resultA">
+        <div class="result-label">Despachar</div>
+        <div class="result-value">—</div>
+        <div class="result-unit">gramos</div>
+      </div>
+    </div>
+
+    <!-- MODO B -->
+    <div id="modoB" role="tabpanel" hidden>
+      <div class="label">¿Cuántos gramos pidió el cliente?</div>
+      <div class="calc-input-wrap">
+        <input type="number" id="inputGramos" inputmode="decimal" placeholder="0" min="0" step="1" aria-label="Gramos solicitados" />
+        <span class="unit">g</span>
+      </div>
+      <div class="result-card empty" id="resultB">
+        <div class="result-label">Cobrar</div>
+        <div class="result-value">—</div>
+        <div class="result-unit">pesos</div>
+      </div>
+    </div>
+
+    <button class="clear-btn" id="clearBtn" aria-label="Limpiar todos los campos">
+      <i class="ti ti-refresh" aria-hidden="true"></i> Limpiar
+    </button>
+  </section>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
